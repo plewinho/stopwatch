@@ -54,15 +54,61 @@ const handleStop = () => {
     timesArr.push(stopwatch.textContent);
 
   }
+  
 
-    handlePause();
-    stopwatch.textContent = '0:00';
-    timeList.textContent = '';
-    secounds=0;
-    minutes=0;
+  resetStuff();
+}
 
+const resetTime = () => {
+  
+
+resetStuff();
+timesArr = [];
+time.style.visibility = 'hidden';
+
+}
+
+
+const resetStuff = () => {
+  
+      handlePause();
+      stopwatch.textContent = '0:00';
+      timeList.textContent = '';
+      secounds=0;
+      minutes=0;
+  
+}
+
+const showHistory = () => {
+  
+  timeList.textContent = '';
+  let num = 1;
+
+  timesArr.forEach(time => {
+    const newTime = document.createElement('li');
+    newTime.innerHTML= `Pomiar nr ${num}: <span>${time}</span>`
+    timeList.appendChild(newTime);
+    num ++;
+  })
+}
+
+
+const showInfo = () => {
+  
+  modalShadow.style.display = 'block';
+  modalShadow.classList.add('modal-animation')
+  
+}
+const closeModal = () => {
+  modalShadow.style.display = 'none';
+  modalShadow.classList.remove('modal-animation')
 }
 
 startBtn.addEventListener('click', handleStart);
 pauseBtn.addEventListener('click', handlePause);
 stopBtn.addEventListener('click', handleStop);
+resetBtn.addEventListener('click', resetTime);
+historyBtn.addEventListener('click', showHistory);
+infoBtn.addEventListener('click',showInfo);
+closeModalBtn.addEventListener('click', closeModal);
+window.addEventListener('click', e => e.target === modalShadow ? closeModal() : false);
